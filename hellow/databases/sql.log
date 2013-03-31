@@ -1,0 +1,153 @@
+timestamp: 2013-03-25T10:37:37.549226
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2013-03-25T10:37:37.554357
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2013-03-25T10:37:37.559942
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2013-03-25T10:37:37.565975
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2013-03-25T10:37:37.573186
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2013-03-25T10:37:37.580259
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2013-03-25T11:05:23.617322
+CREATE TABLE slot(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    odd INTEGER
+);
+success!
+timestamp: 2013-03-25T12:44:57.194183
+CREATE TABLE game(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    balance INTEGER
+);
+success!
+timestamp: 2013-03-25T12:45:40.540179
+CREATE TABLE gambler(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512)
+);
+success!
+timestamp: 2013-03-25T12:49:45.567807
+ALTER TABLE slot ADD odds INTEGER;
+timestamp: 2013-03-25T12:57:35.943139
+ALTER TABLE game ADD slot INTEGER REFERENCES slot (id) ON DELETE CASCADE;
+timestamp: 2013-03-25T12:57:35.945224
+ALTER TABLE game ADD auth_user INTEGER REFERENCES auth_user (id) ON DELETE CASCADE;
+timestamp: 2013-03-25T13:01:19.540541
+CREATE TABLE game_slots(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    game INTEGER REFERENCES game (id) ON DELETE CASCADE,
+    slot INTEGER REFERENCES slot (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2013-03-26T15:47:11.243373
+CREATE TABLE user_action(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    game INTEGER REFERENCES game (id) ON DELETE CASCADE,
+    slot INTEGER REFERENCES slot (id) ON DELETE CASCADE,
+    bet INTEGER,
+    winning INTEGER,
+    odds INTEGER
+);
+success!
+timestamp: 2013-03-26T15:48:13.266172
+ALTER TABLE user_action ADD auth_user INTEGER REFERENCES auth_user (id) ON DELETE CASCADE;
+DELETE FROM user_action;
+DELETE FROM sqlite_sequence WHERE name='user_action';
+success!
+DELETE FROM game_slots;
+DELETE FROM sqlite_sequence WHERE name='game_slots';
+success!
+DELETE FROM game_slots;
+DELETE FROM sqlite_sequence WHERE name='game_slots';
+success!
+DELETE FROM user_action;
+DELETE FROM sqlite_sequence WHERE name='user_action';
+success!
+timestamp: 2013-03-28T14:31:33.019405
+ALTER TABLE user_action ADD date_timedatetime CHAR(512);
+timestamp: 2013-03-28T14:38:03.111536
+ALTER TABLE user_action ADD event_timedatetime CHAR(512);
+DELETE FROM user_action;
+DELETE FROM sqlite_sequence WHERE name='user_action';
+success!
+DROP TABLE user_action;
+success!
+timestamp: 2013-03-28T14:41:28.372800
+CREATE TABLE user_action(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    game INTEGER REFERENCES game (id) ON DELETE CASCADE,
+    auth_user INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    slot INTEGER REFERENCES slot (id) ON DELETE CASCADE,
+    bet INTEGER,
+    winning INTEGER,
+    odds INTEGER,
+    event_timedatetime CHAR(512)
+);
+success!
+DELETE FROM user_action;
+DELETE FROM sqlite_sequence WHERE name='user_action';
+success!
+DELETE FROM game_slots;
+DELETE FROM sqlite_sequence WHERE name='game_slots';
+success!
+DELETE FROM user_action;
+DELETE FROM sqlite_sequence WHERE name='user_action';
+success!
+DELETE FROM user_action;
+DELETE FROM sqlite_sequence WHERE name='user_action';
+success!
+timestamp: 2013-03-29T11:02:34.999828
+ALTER TABLE user_action ADD winnings INTEGER;
+timestamp: 2013-03-29T11:02:35.002859
+ALTER TABLE user_action ADD won CHAR(512);
+DELETE FROM user_action;
+DELETE FROM sqlite_sequence WHERE name='user_action';
+success!
+DELETE FROM user_action;
+DELETE FROM sqlite_sequence WHERE name='user_action';
+success!

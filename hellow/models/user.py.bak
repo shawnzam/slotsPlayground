@@ -1,0 +1,5 @@
+# coding: utf8
+db = DAL('sqlite://storage.sqlite',pool_size=1,check_reserved=['all'])
+db.define_table(
+    'gambler',
+    Field('name'))

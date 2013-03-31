@@ -1,0 +1,15 @@
+{{extend 'layout.html'}}
+<h1>Game {{=gameid}}</h1>
+<div>
+	<ul>
+        <li>Name = {{=name}}</li>
+        <li>Balance = {{=balance}}</li>
+    </ul>
+	<h2>Select Slot to Play</h2>
+    {{=otherForm}}
+	<h2>Submitted variables</h2>
+	{{=BEAUTIFY(request.vars)}}
+	<h2>Errors in form</h2>
+	{{=BEAUTIFY(otherForm.errors)}}
+    {{=otherForm.vars}}
+</div>
